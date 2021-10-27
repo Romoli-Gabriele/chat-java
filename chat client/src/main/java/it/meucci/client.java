@@ -3,7 +3,7 @@ import java.io.*;
 import java.net.*;
 
 public class client {
-    String nomeServer = "";
+    String nomeServer = "10.22.9.6";
     int portaServer = 6789;
     Socket socket;
     BufferedReader tastiera;
@@ -39,9 +39,9 @@ public class client {
         controllo.start();
         try {
             for (;;) {
-                System.out.println("4 Inserisci il messaggio: " + '\n');
+//                System.out.println("4 Inserisci il messaggio: " + '\n');
                 messaggio = tastiera.readLine();//Lettura linea dal Buffer
-                System.out.println("5 Invio stringa al server e attendo...");
+//                System.out.println("5 Invio stringa al server e attendo...");
                 out.writeBytes(messaggio + '\n');//Invio stringa al server
 
             }

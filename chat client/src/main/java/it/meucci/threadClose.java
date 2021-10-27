@@ -18,7 +18,7 @@ public class threadClose extends Thread {
         for (;;) {
             try {
                 reply = in.readLine();//Lettura e controllo se bisogna chiudere il  client
-                if (reply.equals("close")||cli.messaggio.equals("FINE")||cli.messaggio.equals("STOP")) {
+                if (reply.equals("close")||cli.messaggio.equals("fine")||cli.messaggio.equals("stop")) {
                     System.out.println("Server disconnesso, chiusura client..");
                     System.exit(1);
                 }else{
