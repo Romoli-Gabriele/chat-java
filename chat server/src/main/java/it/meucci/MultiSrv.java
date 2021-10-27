@@ -5,8 +5,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
-import java.util.concurrent.TimeUnit;
-
 public class MultiSrv {
     Vector<ServerThread> threadList = new Vector<ServerThread>(); //Creazione lista dei gestori dei client
     String nome;
@@ -20,9 +18,7 @@ public class MultiSrv {
                 Socket socket = server.accept();//accetta client e libera la porta
                 inDalClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 System.out.println("Richiesta nome inviata");
-                
                 nome = inDalClient.readLine();
-                System.out.println(nome);
                 ServerThread serverthread = new ServerThread(nome, socket,server,this);//creazione thread per gestire il client
                 threadList.add(serverthread);//aggiungi il gestore appena creato alla lista
                 serverthread.start();
@@ -44,6 +40,7 @@ public class MultiSrv {
 				threadList.get(i).scrivi(messaggio, mittente);
 			} catch (IOException e) {
 				System.out.println("Errore scrittura in broadcast");
+                System.exit(1);
 			}
         }
     }
