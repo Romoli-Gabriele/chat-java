@@ -11,8 +11,9 @@ public class ServerThread extends Thread {
     BufferedReader inDalClient;
     DataOutputStream outVersoClient;
     MultiSrv allThread;
+    String Nome;
 
-    public ServerThread(Socket socket, ServerSocket server, MultiSrv gestore) {
+    public ServerThread(String Nome, Socket socket, ServerSocket server, MultiSrv gestore) {
         this.client = socket;
         this.server = server;
         this.allThread = gestore;
@@ -22,6 +23,7 @@ public class ServerThread extends Thread {
         try {
             comunica();
         } catch (Exception e) {
+            System.out.println("Errore comunicazine");
         }
 
     }
@@ -41,7 +43,6 @@ public class ServerThread extends Thread {
         outVersoClient = new DataOutputStream(client.getOutputStream());
         for (;;) {
             StringRV = inDalClient.readLine();//Lettura dal client
-            StringMD = StringRV.toUpperCase();//modifica stringa
             if (StringRV == null || StringMD.equals("FINE") || StringMD.equals("STOP")) { //chiusura thread 
                 outVersoClient.writeBytes(StringRV + " (=>server dedicato in chiusura..)" + '\n');
                 System.out.println("Echo sul server in chiusura : " + StringRV);
@@ -50,8 +51,7 @@ public class ServerThread extends Thread {
                 client.close();
                 break;
             } else {
-                outVersoClient.writeBytes(StringMD + "(ricevuta e ritrasmessa)" + '\n');
-                System.out.println("6 Echo sul server: " + StringRV);
+                allThread.broadCast(StringRV, Nome);
             }
         }
         outVersoClient.close();
@@ -65,4 +65,8 @@ public class ServerThread extends Thread {
             System.exit(1);
         }
     }
+    public void scrivi(String messaggio, String mittente) throws IOException{
+        outVersoClient.writeBytes(mittente+"@g"+messaggio+ '\n');
+    }
+
 }

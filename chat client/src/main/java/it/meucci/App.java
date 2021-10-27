@@ -1,4 +1,4 @@
-package cli.client;
+package it.meucci;
 
 import java.io.IOException;
 
