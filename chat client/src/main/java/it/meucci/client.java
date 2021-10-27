@@ -3,21 +3,25 @@ import java.io.*;
 import java.net.*;
 
 public class client {
-    String nomeServer = "localhost";
+    String nomeServer = "";
     int portaServer = 6789;
     Socket socket;
     BufferedReader tastiera;
-    String StringUser = " ";
+    String messaggio = " ";
     String StringReply;
     DataInputStream in;
     DataOutputStream out;
+    String Nome;
 
     protected Socket connetti() {
         try {
             tastiera = new BufferedReader(new InputStreamReader(System.in)); // creazione Buffer
+            System.out.println("inserisci il nome: ");
+            Nome=tastiera.readLine();
             socket = new Socket(nomeServer, portaServer); // creazione nuovo Socket
             out = new DataOutputStream(socket.getOutputStream()); // gestione input e output
             in = new DataInputStream(socket.getInputStream());
+            out.writeBytes(Nome + '\n');
         } catch (Exception e) {
             System.err.println("Errore creazione Socket o Buffer");
             System.exit(1);
@@ -35,10 +39,10 @@ public class client {
         controllo.start();
         try {
             for (;;) {
-                System.out.println("4 Inserisci stringa da modificare: " + '\n');
-                StringUser = tastiera.readLine();//Lettura linea dal Buffer
+                System.out.println("4 Inserisci il messaggio: " + '\n');
+                messaggio = tastiera.readLine();//Lettura linea dal Buffer
                 System.out.println("5 Invio stringa al server e attendo...");
-                out.writeBytes(StringUser + '\n');//Invio stringa al server
+                out.writeBytes(messaggio + '\n');//Invio stringa al server
 
             }
         } catch (Exception e) {
