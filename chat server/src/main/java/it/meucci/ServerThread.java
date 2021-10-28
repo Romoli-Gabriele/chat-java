@@ -1,6 +1,7 @@
 package it.meucci;
 
 import java.net.*;
+import java.util.concurrent.TimeUnit;
 import java.io.*;
 
 public class ServerThread extends Thread {
@@ -11,13 +12,15 @@ public class ServerThread extends Thread {
     DataOutputStream outVersoClient;
     MultiSrv allThread;
     String Nome;
+    String destinatario; // destinatario messaggio
+    boolean globale; // se il messaggio è indirizzato a tutti = true
 
     public ServerThread(String Nome, Socket socket, ServerSocket server, MultiSrv gestore) {
         this.client = socket;
         this.server = server;
         this.allThread = gestore;
         this.Nome = Nome;
-        System.out.println("Membro entrato nella chat: Benvenuto "+Nome);
+        System.out.println("Membro entrato nella chat: Benvenuto " + Nome);
     }
 
     public void run() {
@@ -29,9 +32,10 @@ public class ServerThread extends Thread {
         }
 
     }
-    public void close(){
+
+    public void close() {
         try {
-            System.out.println(Nome+" ha abbandonato il gruppo");
+            System.out.println(Nome + " ha abbandonato il gruppo");
             outVersoClient.writeBytes("close");// invia segnale al client di chiudersi
             outVersoClient.close();
             inDalClient.close();
@@ -45,33 +49,49 @@ public class ServerThread extends Thread {
         inDalClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
         outVersoClient = new DataOutputStream(client.getOutputStream());
         for (;;) {
-            StringRV = inDalClient.readLine();//Lettura dal client
-            
-            
-            if (StringRV.equals("fine")) { //chiusura thread 
-                System.out.println(Nome+" ha abbandonato il gruppo");
+            destinatario = inDalClient.readLine();// Lettura destinatario
+            System.out.println("Invio messaggio a "+destinatario+'\n');
+            //while(StringRV == destinatario){}
+            StringRV = inDalClient.readLine();// Lettura messaggio
+            System.out.println("Il messaggio è "+StringRV+'\n');
+            if (destinatario == "G") {
+                allThread.broadCast(StringRV, Nome);
+            } else {
+                for (int i = 0; i < allThread.threadList.size(); i++) {
+                    if (allThread.threadList.get(i).Nome == (destinatario+'\n')) {
+                        allThread.threadList.get(i).scrivi(StringRV, Nome, globale);
+                    }
+
+                }
+            }
+            if (StringRV.equals("fine")) { // chiusura thread
+                System.out.println(Nome + " ha abbandonato il gruppo");
                 outVersoClient.close();
                 inDalClient.close();
                 client.close();
                 break;
-            } else {
-                allThread.broadCast(StringRV, Nome);
             }
             if (StringRV.equals("stop")) {
-            allThread.close();//chiama la chiusura di tutti i thread
-            outVersoClient.close();
-            inDalClient.close();
-            client.close();
-            server.close();
-            System.out.println("Server in chiusura");
-            System.exit(1);
+                allThread.close();// chiama la chiusura di tutti i thread
+                outVersoClient.close();
+                inDalClient.close();
+                client.close();
+                server.close();
+                System.out.println("Server in chiusura");
+                System.exit(1);
             }
         }
-        
-        
+
     }
-    public void scrivi(String messaggio, String mittente) throws IOException{
-        outVersoClient.writeBytes(mittente+"@g>  "+messaggio+ '\n');
+
+    public void scrivi(String messaggio, String mittente, boolean globale) throws IOException {
+        if (globale) {
+            System.out.println(mittente + ".@G> " + messaggio + '\n');
+            outVersoClient.writeBytes(mittente + ".@G> " + messaggio + '\n');
+        } else{
+            System.out.println(mittente + "> " + messaggio + '\n');
+            outVersoClient.writeBytes(mittente + "> " + messaggio + '\n');
+        }
     }
 
 }

@@ -38,7 +38,7 @@ public class MultiSrv {
         for(int i = 0;i < threadList.size(); i++){
             if(threadList.get(i).Nome != mittente){
             try {
-				threadList.get(i).scrivi(messaggio, mittente);
+				threadList.get(i).scrivi(messaggio, mittente, true);
 			} catch (IOException e) {
 				System.out.println("Errore scrittura in broadcast");
                 System.exit(1);

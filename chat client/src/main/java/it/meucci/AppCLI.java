@@ -2,7 +2,7 @@ package it.meucci;
 
 import java.io.IOException;
 
-public class App 
+public class AppCLI 
 {
     public static void main( String[] args ) throws IOException
     {

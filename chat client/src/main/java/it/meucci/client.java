@@ -35,13 +35,16 @@ public class client {
     }
 
     public void comunica() throws IOException {
-        threadClose controllo = new threadClose(in, this); // Creazione thread controllo chiusura da remoto
+        PrintClose controllo = new PrintClose(in, this); // Creazione thread controllo chiusura da remoto
         controllo.start();
         try {
             for (;;) {
-                messaggio = tastiera.readLine();//Lettura linea dal Buffer
-//                
-                out.writeBytes(messaggio + '\n');//Invio stringa al server
+                System.out.println("(G)=global>Nome destinatario:    ");
+                String destinatario = tastiera.readLine();
+                System.out.println("(G)=global>Scrivi messaggio");
+                messaggio = tastiera.readLine();
+                out.writeBytes(destinatario + '\n');//invio destinatario   
+                out.writeBytes(messaggio + '\n');//invio messaggio
                 System.out.println("Messaggio inviato..."+'\n');
             }
         } catch (Exception e) {

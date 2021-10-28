@@ -4,7 +4,7 @@ package it.meucci;
  * Hello world!
  *
  */
-public class App 
+public class AppSRV 
 {
     public static void main( String[] args )
     {

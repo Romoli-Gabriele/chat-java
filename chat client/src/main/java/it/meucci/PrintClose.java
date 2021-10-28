@@ -1,15 +1,14 @@
 package it.meucci;
 
-import java.net.*;
 import java.io.*;
 
-public class threadClose extends Thread {
+public class PrintClose extends Thread {
 
     DataInputStream in;
     client cli;
     String reply;
 
-    public threadClose(DataInputStream in, client cli) {
+    public PrintClose(DataInputStream in, client cli) {
         this.in = in;
         this.cli = cli;
     }
@@ -22,7 +21,7 @@ public class threadClose extends Thread {
                     System.out.println("Server disconnesso, chiusura client..");
                     System.exit(1);
                 }else{
-                    System.out.println(""+ '\n'+reply);
+                    System.out.println(reply);
                 }
             } catch (IOException e) {
                 System.out.println("Errore lettura dal Server");
