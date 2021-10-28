@@ -36,12 +36,14 @@ public class MultiSrv {
 
     public void broadCast(String messaggio,String mittente){
         for(int i = 0;i < threadList.size(); i++){
+            if(threadList.get(i).Nome != mittente){
             try {
 				threadList.get(i).scrivi(messaggio, mittente);
 			} catch (IOException e) {
 				System.out.println("Errore scrittura in broadcast");
                 System.exit(1);
-			}
+			    }
+            }
         }
     }
 
