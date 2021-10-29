@@ -1,7 +1,6 @@
 package it.meucci;
 
 import java.net.*;
-import java.util.concurrent.TimeUnit;
 import java.io.*;
 
 public class ServerThread extends Thread {
@@ -54,11 +53,11 @@ public class ServerThread extends Thread {
             //while(StringRV == destinatario){}
             StringRV = inDalClient.readLine();// Lettura messaggio
             System.out.println("Il messaggio è "+StringRV+'\n');
-            if (destinatario == "G") {
+            if (destinatario.equals("G")) {
                 allThread.broadCast(StringRV, Nome);
             } else {
                 for (int i = 0; i < allThread.threadList.size(); i++) {
-                    if (allThread.threadList.get(i).Nome == (destinatario+'\n')) {
+                    if (allThread.threadList.get(i).Nome.equals(destinatario)) {
                         allThread.threadList.get(i).scrivi(StringRV, Nome, globale);
                     }
 

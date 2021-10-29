@@ -35,8 +35,9 @@ public class MultiSrv {
     }
 
     public void broadCast(String messaggio,String mittente){
+        System.out.println("Invio messaggio a tutti");
         for(int i = 0;i < threadList.size(); i++){
-            if(threadList.get(i).Nome != mittente){
+            if(!threadList.get(i).Nome.equals(mittente)){
             try {
 				threadList.get(i).scrivi(messaggio, mittente, true);
 			} catch (IOException e) {
