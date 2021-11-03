@@ -30,7 +30,7 @@ public class MultiSrv {
                     listaUtenti = "Sei il primo utente ad accedere, sei amministratore del gruppo";
                     amministratore = true;
                 }
-                listaUtenti = ("Utenti collegati: "+listaUtenti);
+                listaUtenti = ("Utenti collegati: "+listaUtenti+'\n');
                 outVersoClient.writeBytes(listaUtenti);//invia i nomi di tutti gli utenti collegati
                 ServerThread serverthread = new ServerThread(nome, socket,server,this,amministratore);//creazione thread per gestire il client
                 threadList.add(serverthread);//aggiungi il gestore appena creato alla lista

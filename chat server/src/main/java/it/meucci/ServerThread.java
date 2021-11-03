@@ -1,7 +1,6 @@
 package it.meucci;
 
 import java.net.*;
-import java.util.concurrent.TimeUnit;
 import java.io.*;
 
 public class ServerThread extends Thread {
@@ -22,7 +21,7 @@ public class ServerThread extends Thread {
         this.allThread = gestore;
         this.Nome = Nome;
         this.amministratore = amministratore;
-        System.out.println("Membro entrato nella chat: Benvenuto " + Nome);
+        System.out.println("Membro entrato nella chat: Benvenuto " + Nome+'\n');
     }
 
     public void run() {
@@ -37,7 +36,7 @@ public class ServerThread extends Thread {
 
     public void close() {
         try {
-            allThread.broadCast(Nome + " ha abbandonato il gruppo","G");
+            allThread.broadCast(Nome + " ha abbandonato il gruppo"+'\n',"G");
             outVersoClient.writeBytes("close");// invia segnale al client di chiudersi
             outVersoClient.close();
             inDalClient.close();

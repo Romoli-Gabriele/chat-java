@@ -24,7 +24,8 @@ public class InputControl extends Thread {
                     System.out.println(reply);
                 }
             } catch (IOException e) {
-                System.out.println("Errore lettura dal Server");
+                System.out.println("Chiusura del Server...");
+                System.exit(1);
             }
         }
     }
