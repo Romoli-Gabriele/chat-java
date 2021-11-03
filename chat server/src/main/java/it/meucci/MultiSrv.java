@@ -6,9 +6,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 public class MultiSrv {
+    
     Vector<ServerThread> threadList = new Vector<ServerThread>(); //Creazione lista dei gestori dei client
     String nome;
     BufferedReader inDalClient;
+    DataOutputStream outVersoClient;
     public void start() {
         try {
             ServerSocket server = new ServerSocket(6789); //Apertura porta
@@ -17,8 +19,20 @@ public class MultiSrv {
             for (;;) {
                 Socket socket = server.accept();//accetta client e libera la porta
                 inDalClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                outVersoClient = new DataOutputStream(socket.getOutputStream());
+                String listaUtenti ="";
+                for(int i = 0; i<threadList.size(); i++){
+                    listaUtenti = (listaUtenti+threadList.get(i).Nome+", ");
+                }
                 nome = inDalClient.readLine();
-                ServerThread serverthread = new ServerThread(nome, socket,server,this);//creazione thread per gestire il client
+                boolean amministratore = false;
+                if(threadList.size() == 0){
+                    listaUtenti = "Sei il primo utente ad accedere, sei amministratore del gruppo";
+                    amministratore = true;
+                }
+                listaUtenti = ("Utenti collegati: "+listaUtenti);
+                outVersoClient.writeBytes(listaUtenti);//invia i nomi di tutti gli utenti collegati
+                ServerThread serverthread = new ServerThread(nome, socket,server,this,amministratore);//creazione thread per gestire il client
                 threadList.add(serverthread);//aggiungi il gestore appena creato alla lista
                 serverthread.start();
             }

@@ -2,13 +2,13 @@ package it.meucci;
 
 import java.io.*;
 
-public class PrintClose extends Thread {
+public class InputControl extends Thread {
 
     DataInputStream in;
     client cli;
     String reply;
 
-    public PrintClose(DataInputStream in, client cli) {
+    public InputControl(DataInputStream in, client cli) {
         this.in = in;
         this.cli = cli;
     }

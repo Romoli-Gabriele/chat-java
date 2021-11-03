@@ -14,12 +14,14 @@ public class ServerThread extends Thread {
     String Nome;
     String destinatario; // destinatario messaggio
     boolean globale; // se il messaggio è indirizzato a tutti = true
+    boolean amministratore;
 
-    public ServerThread(String Nome, Socket socket, ServerSocket server, MultiSrv gestore) {
+    public ServerThread(String Nome, Socket socket, ServerSocket server, MultiSrv gestore, boolean amministratore) {
         this.client = socket;
         this.server = server;
         this.allThread = gestore;
         this.Nome = Nome;
+        this.amministratore = amministratore;
         System.out.println("Membro entrato nella chat: Benvenuto " + Nome);
     }
 
@@ -35,7 +37,7 @@ public class ServerThread extends Thread {
 
     public void close() {
         try {
-            System.out.println(Nome + " ha abbandonato il gruppo");
+            allThread.broadCast(Nome + " ha abbandonato il gruppo","G");
             outVersoClient.writeBytes("close");// invia segnale al client di chiudersi
             outVersoClient.close();
             inDalClient.close();
@@ -64,14 +66,10 @@ public class ServerThread extends Thread {
                 }
             }
             if (StringRV.equals("fine")) { // chiusura thread
-                System.out.println(Nome + " ha abbandonato il gruppo");
-                outVersoClient.close();
-                inDalClient.close();
-                client.close();
+                this.close();
                 break;
             }
-            if (StringRV.equals("stop")) {
-                allThread.close();// chiama la chiusura di tutti i thread
+            if (StringRV.equals("stop")&&amministratore) {//System.out.println(Nome + " ha abbandonato il gruppo");
                 outVersoClient.close();
                 inDalClient.close();
                 client.close();

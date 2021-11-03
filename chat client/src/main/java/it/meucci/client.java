@@ -17,7 +17,7 @@ public class client {
         try {
             tastiera = new BufferedReader(new InputStreamReader(System.in)); // creazione Buffer
             System.out.println("inserisci il nome: ");
-            Nome=tastiera.readLine();
+            Nome = tastiera.readLine();
             socket = new Socket(nomeServer, portaServer); // creazione nuovo Socket
             out = new DataOutputStream(socket.getOutputStream()); // gestione input e output
             in = new DataInputStream(socket.getInputStream());
@@ -35,7 +35,7 @@ public class client {
     }
 
     public void comunica() throws IOException {
-        PrintClose controllo = new PrintClose(in, this); // Creazione thread controllo chiusura da remoto
+        InputControl controllo = new InputControl(in, this); // Creazione thread controllo chiusura da remoto
         controllo.start();
         try {
             for (;;) {
