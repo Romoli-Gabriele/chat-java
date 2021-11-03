@@ -50,15 +50,14 @@ public class ServerThread extends Thread {
         outVersoClient = new DataOutputStream(client.getOutputStream());
         for (;;) {
             destinatario = inDalClient.readLine();// Lettura destinatario
-            System.out.println("Invio messaggio a "+destinatario+'\n');
-            //while(StringRV == destinatario){}
+            //System.out.println("Invio messaggio a "+destinatario+'\n');
             StringRV = inDalClient.readLine();// Lettura messaggio
-            System.out.println("Il messaggio è "+StringRV+'\n');
-            if (destinatario == "G") {
+            //System.out.println("Il messaggio è "+StringRV+'\n');
+            if (destinatario.equals("G")) {
                 allThread.broadCast(StringRV, Nome);
             } else {
                 for (int i = 0; i < allThread.threadList.size(); i++) {
-                    if (allThread.threadList.get(i).Nome == (destinatario+'\n')) {
+                    if (allThread.threadList.get(i).Nome.equals(destinatario)) {
                         allThread.threadList.get(i).scrivi(StringRV, Nome, globale);
                     }
 
@@ -86,10 +85,10 @@ public class ServerThread extends Thread {
 
     public void scrivi(String messaggio, String mittente, boolean globale) throws IOException {
         if (globale) {
-            System.out.println(mittente + ".@G> " + messaggio + '\n');
+            //System.out.println(mittente + ".@G> " + messaggio + '\n');
             outVersoClient.writeBytes(mittente + ".@G> " + messaggio + '\n');
         } else{
-            System.out.println(mittente + "> " + messaggio + '\n');
+            //System.out.println(mittente + "> " + messaggio + '\n');
             outVersoClient.writeBytes(mittente + "> " + messaggio + '\n');
         }
     }

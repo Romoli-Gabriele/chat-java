@@ -17,7 +17,6 @@ public class MultiSrv {
             for (;;) {
                 Socket socket = server.accept();//accetta client e libera la porta
                 inDalClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                System.out.println("Richiesta nome inviata");
                 nome = inDalClient.readLine();
                 ServerThread serverthread = new ServerThread(nome, socket,server,this);//creazione thread per gestire il client
                 threadList.add(serverthread);//aggiungi il gestore appena creato alla lista
@@ -36,7 +35,7 @@ public class MultiSrv {
 
     public void broadCast(String messaggio,String mittente){
         for(int i = 0;i < threadList.size(); i++){
-            if(threadList.get(i).Nome != mittente){
+            if(!threadList.get(i).Nome.equals(mittente)){
             try {
 				threadList.get(i).scrivi(messaggio, mittente, true);
 			} catch (IOException e) {
