@@ -15,13 +15,18 @@ public class client {
 
     protected Socket connetti() {
         try {
+            String change = "nome già utilizzato";
             tastiera = new BufferedReader(new InputStreamReader(System.in)); // creazione Buffer
-            System.out.println("inserisci il nome: ");
-            Nome = tastiera.readLine();
             socket = new Socket(nomeServer, portaServer); // creazione nuovo Socket
             out = new DataOutputStream(socket.getOutputStream()); // gestione input e output
             in = new DataInputStream(socket.getInputStream());
-            out.writeBytes(Nome + '\n');
+            while (change.equals("nome già utilizzato")) {
+                System.out.println("inserisci il nome: ");
+                Nome = tastiera.readLine();
+                out.writeBytes(Nome + '\n');
+                change = in.readLine();
+                System.out.println(change);
+            }
         } catch (Exception e) {
             System.err.println("Errore creazione Socket o Buffer");
             System.exit(1);
@@ -39,9 +44,9 @@ public class client {
         controllo.start();
         try {
             for (;;) {
-                System.out.println("(G)=global>Nome destinatario:    ");
+                System.out.println("Local> Nome destinatario:    ");
                 String destinatario = tastiera.readLine();
-                System.out.println("(G)=global>Scrivi messaggio");
+                System.out.println("Local> Scrivi messaggio");
                 messaggio = tastiera.readLine();
                 out.writeBytes(destinatario + '\n');//invio destinatario   
                 out.writeBytes(messaggio + '\n');//invio messaggio

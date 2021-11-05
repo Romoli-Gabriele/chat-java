@@ -4,9 +4,11 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Vector;
 public class MultiSrv {
     
+    //HashMap<String,ServerThread> allThread = new HashMap();
     Vector<ServerThread> threadList = new Vector<ServerThread>(); //Creazione lista dei gestori dei client
     String nome;
     BufferedReader inDalClient;
@@ -21,10 +23,20 @@ public class MultiSrv {
                 inDalClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 outVersoClient = new DataOutputStream(socket.getOutputStream());
                 String listaUtenti ="";
+                nome = null;
                 for(int i = 0; i<threadList.size(); i++){
                     listaUtenti = (listaUtenti+threadList.get(i).Nome+", ");
                 }
-                nome = inDalClient.readLine();
+                while(nome == null){
+                    nome = inDalClient.readLine();
+                    for(int i =0; i< threadList.size(); i++){
+                        if(threadList.get(i).Nome.equals(nome)){
+                            nome = null;
+                            break;
+                        }
+                    }
+                }
+                
                 boolean amministratore = false;
                 if(threadList.size() == 0){
                     listaUtenti = "Sei il primo utente ad accedere, sei amministratore del gruppo";

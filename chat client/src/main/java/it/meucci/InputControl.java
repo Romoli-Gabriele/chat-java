@@ -18,7 +18,7 @@ public class InputControl extends Thread {
             try {
                 reply = in.readLine();//Lettura e controllo se bisogna chiudere il  client
                 if (reply.equals("close")||cli.messaggio.equals("fine")||cli.messaggio.equals("stop")) {
-                    System.out.println("Server disconnesso, chiusura client..");
+                    System.out.println("Abbandono il gruppo..");
                     System.exit(1);
                 }else{
                     System.out.println(reply);
