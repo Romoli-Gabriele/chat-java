@@ -4,11 +4,9 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.Vector;
 public class MultiSrv {
     
-    //HashMap<String,ServerThread> allThread = new HashMap();
     Vector<ServerThread> threadList = new Vector<ServerThread>(); //Creazione lista dei gestori dei client
     String nome;
     BufferedReader inDalClient;
@@ -49,7 +47,7 @@ public class MultiSrv {
                 serverthread.start();
             }
         } catch (Exception e) {
-            System.out.println("Errore connessione client o creazione thread");
+            System.out.println("");
             System.exit(1);
         }
     }

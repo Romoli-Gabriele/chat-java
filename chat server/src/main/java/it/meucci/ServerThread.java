@@ -13,7 +13,7 @@ public class ServerThread extends Thread {
     String Nome;
     String destinatario; // destinatario messaggio
     boolean globale; // se il messaggio è indirizzato a tutti = true
-    boolean amministratore;
+    boolean amministratore;//true se l'utente ha il permesso di chiudere la chat di tutto il gruppo
 
     public ServerThread(String Nome, Socket socket, ServerSocket server, MultiSrv gestore, boolean amministratore) {
         this.client = socket;
