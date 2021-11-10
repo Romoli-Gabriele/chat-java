@@ -17,6 +17,7 @@ public class client {
     String destinatario;
     gui Grafica;
     InputControl controllo;
+    boolean amministratore = false;
 
 
     protected Socket connetti() {
@@ -41,7 +42,7 @@ public class client {
         } catch (Exception e) {
             System.err.println("Ipossibile trovare IP");
         }
-        controllo = new InputControl(in, this); // Creazione thread controllo chiusura da remoto
+        controllo = new InputControl(in, this); // Creazione thread controllo chiusura da remoto e stampa messaggi in arrivo
         controllo.start();
         return socket;
     }

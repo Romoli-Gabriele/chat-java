@@ -13,7 +13,8 @@ public class ServerThread extends Thread {
     String Nome;
     String destinatario; // destinatario messaggio
     boolean globale; // se il messaggio è indirizzato a tutti = true
-    boolean amministratore;//true se l'utente ha il permesso di chiudere la chat di tutto il gruppo
+    boolean amministratore;// true se l'utente ha il permesso di chiudere la chat di tutto il gruppo
+    private boolean remove;
 
     public ServerThread(String Nome, Socket socket, ServerSocket server, MultiSrv gestore, boolean amministratore) {
         this.client = socket;
@@ -21,7 +22,7 @@ public class ServerThread extends Thread {
         this.allThread = gestore;
         this.Nome = Nome;
         this.amministratore = amministratore;
-        System.out.println("Membro entrato nella chat: Benvenuto " + Nome+'\n');
+        System.out.println("Membro entrato nella chat: Benvenuto " + Nome + '\n');
     }
 
     public void run() {
@@ -36,13 +37,20 @@ public class ServerThread extends Thread {
 
     public void close() {
         try {
-            allThread.broadCast(Nome + " ha abbandonato il gruppo"+'\n',"G");
+            allThread.broadCast(Nome + " ha abbandonato il gruppo" + '\n', "G");
+            remove = allThread.threadList.remove(this);
+            String listaUtenti ="";
+            for(int i =0; i<allThread.threadList.size(); i++){
+                listaUtenti = (listaUtenti+allThread.threadList.get(i).Nome+", ");
+            }
+            System.out.println(listaUtenti+remove);
             outVersoClient.writeBytes("close");// invia segnale al client di chiudersi
             outVersoClient.close();
             inDalClient.close();
             client.close();
+            this.stop();
         } catch (IOException e) {
-            System.out.println("Errore invio messaggio di chiusura");
+            System.out.println("Errore di chiusura");
         }
     }
 
@@ -50,11 +58,20 @@ public class ServerThread extends Thread {
         inDalClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
         outVersoClient = new DataOutputStream(client.getOutputStream());
         for (;;) {
-            destinatario = inDalClient.readLine();// Lettura destinatario
-            //System.out.println("Invio messaggio a "+destinatario+'\n');
+            destinatario = inDalClient.readLine();// Lettura destinatario o tipo messaggio
+            if (destinatario.equals("fine")) { // chiusura thread
+                this.close();
+                break;
+            }else if (destinatario.equals("stop") && amministratore) {
+                outVersoClient.close();
+                inDalClient.close();
+                client.close();
+                server.close();
+                System.out.println("Server in chiusura");
+                System.exit(1);
+            }
             StringRV = inDalClient.readLine();// Lettura messaggio
-            //System.out.println("Il messaggio è "+StringRV+'\n');
-            if (destinatario.equals("G")) {
+            if (destinatario.equals("G")){
                 allThread.broadCast(StringRV, Nome);
             } else {
                 for (int i = 0; i < allThread.threadList.size(); i++) {
@@ -64,28 +81,17 @@ public class ServerThread extends Thread {
 
                 }
             }
-            if (StringRV.equals("fine")) { // chiusura thread
-                this.close();
-                break;
-            }
-            if (StringRV.equals("stop")&&amministratore) {//System.out.println(Nome + " ha abbandonato il gruppo");
-                outVersoClient.close();
-                inDalClient.close();
-                client.close();
-                server.close();
-                System.out.println("Server in chiusura");
-                System.exit(1);
-            }
+
         }
 
     }
 
     public void scrivi(String messaggio, String mittente, boolean globale) throws IOException {
         if (globale) {
-            //System.out.println(mittente + ".@G> " + messaggio + '\n');
+            // System.out.println(mittente + ".@G> " + messaggio + '\n');
             outVersoClient.writeBytes(mittente + ".@G> " + messaggio + '\n');
-        } else{
-            //System.out.println(mittente + "> " + messaggio + '\n');
+        } else {
+            // System.out.println(mittente + "> " + messaggio + '\n');
             outVersoClient.writeBytes(mittente + "> " + messaggio + '\n');
         }
     }
