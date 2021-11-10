@@ -7,11 +7,12 @@ public class client {
     int portaServer = 6789;
     Socket socket;
     BufferedReader tastiera;
-    String messaggio = " ";
+    static String messaggio = " ";
     String StringReply;
     DataInputStream in;
     DataOutputStream out;
     String Nome;
+    static String destinatario;
 
     protected Socket connetti() {
         try {
