@@ -39,6 +39,7 @@ public class gui extends JFrame implements ActionListener{
             messaggio.setBounds(160,440,300,70);
         p.add(invio);
             invio.setBounds(460,440,110,70);
+            invio.addActionListener(this);
         c.add(p);
         scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,8 +54,11 @@ public class gui extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent arg0) {
 
         if(arg0.getSource().equals(invio)){
+            System.out.println("invio messaggio");
             CLI.destinatario=this.destinatario.getText();
             CLI.messaggio=this.messaggio.getText();
+            System.out.println("invio messaggio a: "+CLI.destinatario);
+            System.out.println("invio messaggio: "+CLI.messaggio);
             try {
                 CLI.comunica();
             } catch (IOException e) {

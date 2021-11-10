@@ -29,6 +29,7 @@ public class MultiSrv {
                     nome = inDalClient.readLine();
                     for(int i =0; i< threadList.size(); i++){
                         if(threadList.get(i).Nome.equals(nome)){
+                            outVersoClient.writeBytes("nome già utilizzato\n");
                             nome = null;
                             break;
                         }
