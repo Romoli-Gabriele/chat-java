@@ -22,7 +22,7 @@ public class ServerThread extends Thread {
         this.allThread = gestore;
         this.Nome = Nome;
         this.amministratore = amministratore;
-        System.out.println("Membro entrato nella chat: Benvenuto " + Nome + '\n');
+        allThread.broadCast("Membro entrato nella chat: Benvenuto " + Nome + '\n',"G");
     }
 
     public void run() {

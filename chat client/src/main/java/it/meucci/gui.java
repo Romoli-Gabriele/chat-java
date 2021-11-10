@@ -31,7 +31,7 @@ public class gui extends JFrame implements ActionListener{
         p.setLayout(null);
 
         p.add(scrollpane);
-            scrollpane.setBounds(70,10,500,400);
+            scrollpane.setBounds(70,10,540,400);
         p.add(destinatario);
             p.add(Destinatario);
             Destinatario.setBounds(70,410,200,30);
@@ -41,14 +41,14 @@ public class gui extends JFrame implements ActionListener{
             Messaggio.setBounds(70,460,200,30);
             messaggio.setBounds(160,440,300,70);
         p.add(invio);
-            invio.setBounds(460,460,100,50);
+            invio.setBounds(460,410,150,50);
             invio.addActionListener(this);
         p.add(abbandona);
-            abbandona.setBounds(460,500,100,50);
+            abbandona.setBounds(460,460,150,50);
             abbandona.addActionListener(this);
         if(CLI.amministratore){
         p.add(chiudiChat);
-            chiudiChat.setBounds(4600,600,100,50);
+            chiudiChat.setBounds(460,510,150,50);
             chiudiChat.addActionListener(this);
         }
         c.add(p);
@@ -56,8 +56,7 @@ public class gui extends JFrame implements ActionListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(larghezza,altezza);
         this.setVisible(true);
-
-        
+        TextArea.append(CLI.change+"\n");
     }
 
 
@@ -66,7 +65,9 @@ public class gui extends JFrame implements ActionListener{
 
         if(arg0.getSource().equals(invio)){
             CLI.destinatario=this.destinatario.getText();
+            destinatario.setText("");
             CLI.messaggio=this.messaggio.getText();
+            messaggio.setText("");
             try {
                 CLI.comunica();
             } catch (IOException e) {
@@ -75,7 +76,7 @@ public class gui extends JFrame implements ActionListener{
         }
         if(arg0.getSource().equals(abbandona)){
             try {
-                CLI.out.writeBytes("fine");
+                CLI.out.writeBytes("fine\n");
                 TextArea.append("Abbandono il gruppo..");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -83,8 +84,9 @@ public class gui extends JFrame implements ActionListener{
         }
         if(arg0.getSource().equals(chiudiChat)){
             try {
-                CLI.out.writeBytes("stop");
+                CLI.out.writeBytes("stop\n");
                 TextArea.append("Chiudo la chat e abbandono il gruppo..");
+                System.exit(1);
             } catch (IOException e) {
                 e.printStackTrace();
             }

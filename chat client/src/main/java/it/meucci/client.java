@@ -9,7 +9,7 @@ public class client {
     int portaServer = 6789;
     Socket socket;
     BufferedReader tastiera;
-    String messaggio = " ";
+    String messaggio = "";
     String StringReply;
     DataInputStream in;
     DataOutputStream out;
@@ -18,11 +18,12 @@ public class client {
     gui Grafica;
     InputControl controllo;
     boolean amministratore = false;
+    String change;
 
 
     protected Socket connetti() {
         try {
-            String change = "nome già utilizzato";
+            change = "nome già utilizzato";
             tastiera = new BufferedReader(new InputStreamReader(System.in)); // creazione Buffer
             socket = new Socket(nomeServer, portaServer); // creazione nuovo Socket
             out = new DataOutputStream(socket.getOutputStream()); // gestione input e output
@@ -31,8 +32,11 @@ public class client {
                 Nome=JOptionPane.showInputDialog("inserisci nome");
                 out.writeBytes(Nome + '\n');
                 change = in.readLine();
-                System.out.println(change);
             }
+            if (change.equals("Utenti collegati: Sei il primo utente ad accedere, sei amministratore del gruppo")) {
+                amministratore = true;
+            }
+            
         } catch (Exception e) {
             System.err.println("Errore creazione Socket o Buffer");
             System.exit(1);
