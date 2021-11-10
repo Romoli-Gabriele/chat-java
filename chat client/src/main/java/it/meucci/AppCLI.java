@@ -7,8 +7,8 @@ public class AppCLI
     public static void main( String[] args ) throws IOException
     {
         client client1 = new client();
-        gui gui=new gui();
-        //client1.connetti();
-        //client1.comunica();
+        client1.connetti();
+        gui Interfaccia=new gui(client1);
+        client1.comunica();
     }
 }

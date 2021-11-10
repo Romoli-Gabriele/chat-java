@@ -2,17 +2,19 @@ package it.meucci;
 import java.io.*;
 import java.net.*;
 
+import javax.swing.JOptionPane;
+
 public class client {
     String nomeServer = "localhost";
     int portaServer = 6789;
     Socket socket;
     BufferedReader tastiera;
-    static String messaggio = " ";
+    String messaggio = " ";
     String StringReply;
     DataInputStream in;
     DataOutputStream out;
     String Nome;
-    static String destinatario;
+    String destinatario;
 
     protected Socket connetti() {
         try {
@@ -22,8 +24,7 @@ public class client {
             out = new DataOutputStream(socket.getOutputStream()); // gestione input e output
             in = new DataInputStream(socket.getInputStream());
             while (change.equals("nome già utilizzato")) {
-                System.out.println("inserisci il nome: ");
-                Nome = tastiera.readLine();
+                Nome=JOptionPane.showInputDialog("inserisci nome");
                 out.writeBytes(Nome + '\n');
                 change = in.readLine();
                 System.out.println(change);
@@ -37,22 +38,18 @@ public class client {
         } catch (Exception e) {
             System.err.println("Ipossibile trovare IP");
         }
+        InputControl controllo = new InputControl(in, this); // Creazione thread controllo chiusura da remoto
+        controllo.start();
         return socket;
     }
 
     public void comunica() throws IOException {
-        InputControl controllo = new InputControl(in, this); // Creazione thread controllo chiusura da remoto
-        controllo.start();
         try {
-            for (;;) {
-                System.out.println("Local> Nome destinatario:    ");
-                String destinatario = tastiera.readLine();
-                System.out.println("Local> Scrivi messaggio");
-                messaggio = tastiera.readLine();
-                out.writeBytes(destinatario + '\n');//invio destinatario   
+                out.writeBytes(destinatario + '\n');//invio destinatario
+                System.out.println(destinatario);
                 out.writeBytes(messaggio + '\n');//invio messaggio
+                System.out.println(messaggio);
                 System.out.println("Messaggio inviato..."+'\n');
-            }
         } catch (Exception e) {
             socket.close();
             System.exit(1);

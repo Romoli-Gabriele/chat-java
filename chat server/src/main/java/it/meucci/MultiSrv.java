@@ -34,7 +34,6 @@ public class MultiSrv {
                         }
                     }
                 }
-                
                 boolean amministratore = false;
                 if(threadList.size() == 0){
                     listaUtenti = "Sei il primo utente ad accedere, sei amministratore del gruppo";

@@ -19,14 +19,11 @@ public class gui extends JFrame implements ActionListener{
     public final JLabel Destinatario=new JLabel("Destinatario:");
     public final JLabel Messaggio=new JLabel("Messaggio:");
     public String nome="";
-    //richiesta nome
-    public Container c1=new Container();
-    public JPanel p1=new JPanel();
+    public client CLI;
 
-    public gui(){
+    public gui(client CLI){
         super(titolo);
-        nome=JOptionPane.showInputDialog("inserisci nome");
-        JOptionPane.showMessageDialog(null,nome);
+        this.CLI = CLI;
         c=this.getContentPane();
         p.setLayout(null);
 
@@ -54,14 +51,13 @@ public class gui extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        // TODO Auto-generated method stub
+
         if(arg0.getSource().equals(invio)){
-            client.destinatario=this.destinatario.getText();
-            client.messaggio=this.messaggio.getText();
+            CLI.destinatario=this.destinatario.getText();
+            CLI.messaggio=this.messaggio.getText();
             try {
-                client.comunica();
+                CLI.comunica();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
