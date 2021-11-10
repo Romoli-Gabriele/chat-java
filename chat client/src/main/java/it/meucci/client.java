@@ -15,6 +15,9 @@ public class client {
     DataOutputStream out;
     String Nome;
     String destinatario;
+    gui Grafica;
+    InputControl controllo;
+
 
     protected Socket connetti() {
         try {
@@ -38,7 +41,7 @@ public class client {
         } catch (Exception e) {
             System.err.println("Ipossibile trovare IP");
         }
-        InputControl controllo = new InputControl(in, this); // Creazione thread controllo chiusura da remoto
+        controllo = new InputControl(in, this); // Creazione thread controllo chiusura da remoto
         controllo.start();
         return socket;
     }
@@ -46,10 +49,8 @@ public class client {
     public void comunica() throws IOException {
         try {
                 out.writeBytes(destinatario + '\n');//invio destinatario
-                System.out.println(destinatario);
+                Grafica.TextArea.append(Nome+"> "+messaggio+"\n");
                 out.writeBytes(messaggio + '\n');//invio messaggio
-                System.out.println(messaggio);
-                System.out.println("Messaggio inviato..."+'\n');
         } catch (Exception e) {
             socket.close();
             System.exit(1);

@@ -14,7 +14,8 @@ public class gui extends JFrame implements ActionListener{
     public final JTextField messaggio=new JTextField();
     public final int larghezza=800;
     public final int altezza=600;
-    public final JScrollPane scrollpane=new JScrollPane();
+    public final JTextArea TextArea=new JTextArea();
+    public final JScrollPane scrollpane=new JScrollPane(TextArea);
     public final JButton invio=new JButton("Invio");
     public final JLabel Destinatario=new JLabel("Destinatario:");
     public final JLabel Messaggio=new JLabel("Messaggio:");
@@ -54,11 +55,8 @@ public class gui extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent arg0) {
 
         if(arg0.getSource().equals(invio)){
-            System.out.println("invio messaggio");
             CLI.destinatario=this.destinatario.getText();
             CLI.messaggio=this.messaggio.getText();
-            System.out.println("invio messaggio a: "+CLI.destinatario);
-            System.out.println("invio messaggio: "+CLI.messaggio);
             try {
                 CLI.comunica();
             } catch (IOException e) {
