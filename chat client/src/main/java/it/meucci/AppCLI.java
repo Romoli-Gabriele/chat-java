@@ -8,7 +8,7 @@ public class AppCLI
     {
         client client1 = new client();
         gui gui=new gui();
-        client1.connetti();
-        client1.comunica();
+        //client1.connetti();
+        //client1.comunica();
     }
 }

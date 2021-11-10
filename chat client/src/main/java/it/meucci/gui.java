@@ -1,23 +1,32 @@
 package it.meucci;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+
 import javax.swing.*;
 
 public class gui extends JFrame implements ActionListener{
+    //chat 
     public Container c=new Container();
     public static final String titolo="Chat";
     public JPanel p=new JPanel();
-    public static final JTextField destinatario=new JTextField();
-    public static final JTextField messaggio=new JTextField();
-    public static final int larghezza=800;
-    public static final int altezza=600;
-    public static final JScrollPane scrollpane=new JScrollPane();
-    public static final JButton invio=new JButton("Invio");
-    public static final JLabel Destinatario=new JLabel("Destinatario:");
-    public static final JLabel Messaggio=new JLabel("Messaggio:");
+    public final JTextField destinatario=new JTextField();
+    public final JTextField messaggio=new JTextField();
+    public final int larghezza=800;
+    public final int altezza=600;
+    public final JScrollPane scrollpane=new JScrollPane();
+    public final JButton invio=new JButton("Invio");
+    public final JLabel Destinatario=new JLabel("Destinatario:");
+    public final JLabel Messaggio=new JLabel("Messaggio:");
+    public String nome="";
+    //richiesta nome
+    public Container c1=new Container();
+    public JPanel p1=new JPanel();
 
     public gui(){
         super(titolo);
+        nome=JOptionPane.showInputDialog("inserisci nome");
+        JOptionPane.showMessageDialog(null,nome);
         c=this.getContentPane();
         p.setLayout(null);
 
@@ -38,12 +47,24 @@ public class gui extends JFrame implements ActionListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(larghezza,altezza);
         this.setVisible(true);
+
+        
     }
 
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
         // TODO Auto-generated method stub
+        if(arg0.getSource().equals(invio)){
+            client.destinatario=this.destinatario.getText();
+            client.messaggio=this.messaggio.getText();
+            try {
+                client.comunica();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         
     }
 }
