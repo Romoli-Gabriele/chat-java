@@ -24,6 +24,10 @@ public class InputControl extends Thread {
                 }else {
                     Grafica.TextArea.append(reply + '\n');
                 } 
+                if(reply.equals("G> Ora sei amministratore")){
+                    cli.amministratore = true;
+                    Grafica.revalidate();
+                }
             } catch (IOException e) {
                 Grafica.TextArea.append("Chiusura server...");
                 System.exit(1);
