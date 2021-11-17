@@ -1,7 +1,6 @@
 #PROTOCOLLO CHAT
 
 TUTTE LE INFORMAZIONI PASSATE TERMINANO CON UNO \n
-
 CLIENT
 la prima cosa che deve fare è scrivere il proprio nome da mandare al server
 se è valido va avanti altrimenti richiede un nuovo nome (non valido se già presente oppure se è uguale a “close” o “fine”)
