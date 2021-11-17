@@ -58,8 +58,11 @@ public class gui extends JFrame implements ActionListener{
         this.setVisible(true);
         TextArea.append(CLI.change+"\n");
     }
-
-
+    public void nuovoAmministratore(){
+        p.add(chiudiChat);
+            chiudiChat.setBounds(460,510,150,50);
+            chiudiChat.addActionListener(this);
+    }
     @Override
     public void actionPerformed(ActionEvent arg0) {
 
