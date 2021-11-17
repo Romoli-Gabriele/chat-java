@@ -89,7 +89,6 @@ public class gui extends JFrame implements ActionListener{
             try {
                 CLI.out.writeBytes("stop\n");
                 TextArea.append("Chiudo la chat e abbandono il gruppo..");
-                System.exit(1);
             } catch (IOException e) {
                 e.printStackTrace();
             }

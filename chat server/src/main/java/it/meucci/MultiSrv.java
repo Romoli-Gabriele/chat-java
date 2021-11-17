@@ -52,9 +52,13 @@ public class MultiSrv {
         }
     }
     public void close(){
-        for(int i = 0;i < threadList.size(); i++){
-            threadList.get(i).close();//chiusura di tutti i socket 
+        int l = threadList.size();
+        System.out.println("numero tread"+l);
+        for(int i = 0;i < l; i++){
+        
         }
+        System.out.println("chiudo tutto");
+        System.exit(1);
     }
 
     public void broadCast(String messaggio,String mittente){
