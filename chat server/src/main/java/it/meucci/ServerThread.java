@@ -39,13 +39,13 @@ public class ServerThread extends Thread {
         try {
             allThread.broadCast(Nome + " ha abbandonato il gruppo" + '\n', "G");
             remove = allThread.threadList.remove(this);
-            if(amministratore){
-                allThread.newAdministrator();
-            }
             outVersoClient.writeBytes("close");// invia segnale al client di chiudersi
             outVersoClient.close();
             inDalClient.close();
             client.close();
+            if(amministratore){
+                allThread.newAdministrator();
+            }
             this.stop();
         } catch (IOException e) {
             System.out.println("Errore di chiusura");
@@ -61,12 +61,10 @@ public class ServerThread extends Thread {
                 this.close();
                 break;
             }else if (destinatario.equals("stop") && amministratore) {
-                outVersoClient.close();
-                inDalClient.close();
-                client.close();
-                server.close();
+                System.out.println("chiudo tutto");
+                allThread.close();
                 System.out.println("Server in chiusura");
-                System.exit(1);
+                this.close();
             }
             StringRV = inDalClient.readLine();// Lettura messaggio
             if (destinatario.equals("G")){
