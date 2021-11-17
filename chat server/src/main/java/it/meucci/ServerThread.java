@@ -14,7 +14,6 @@ public class ServerThread extends Thread {
     String destinatario; // destinatario messaggio
     boolean globale; // se il messaggio è indirizzato a tutti = true
     boolean amministratore;// true se l'utente ha il permesso di chiudere la chat di tutto il gruppo
-    private boolean remove;
 
     public ServerThread(String Nome, Socket socket, ServerSocket server, MultiSrv gestore, boolean amministratore) {
         this.client = socket;
@@ -38,7 +37,7 @@ public class ServerThread extends Thread {
     public void close() {
         try {
             allThread.broadCast(Nome + " ha abbandonato il gruppo" + '\n', "G");
-            remove = allThread.threadList.remove(this);
+            boolean remove = allThread.threadList.remove(this);
             outVersoClient.writeBytes("close\n");// invia segnale al client di chiudersi
             outVersoClient.close();
             inDalClient.close();

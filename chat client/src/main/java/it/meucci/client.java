@@ -1,6 +1,7 @@
 package it.meucci;
 import java.io.*;
 import java.net.*;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -19,6 +20,7 @@ public class client {
     InputControl controllo;
     boolean amministratore = false;
     String change;
+    Vector<String> lUser = new Vector<String>();
 
 
     protected Socket connetti() {
@@ -34,6 +36,7 @@ public class client {
                 change = in.readLine();
             }
             if (change.equals("Utenti collegati: Sei il primo utente ad accedere, sei amministratore del gruppo")) {
+                lUser.add(Nome);
                 amministratore = true;
             }
             
