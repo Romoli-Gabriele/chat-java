@@ -5,7 +5,7 @@ import java.net.*;
 import javax.swing.JOptionPane;
 
 public class client {
-    String nomeServer = "localhost";
+    String nomeServer = "10.22.9.17";
     int portaServer = 6789;
     Socket socket;
     BufferedReader tastiera;
