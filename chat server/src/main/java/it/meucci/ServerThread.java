@@ -39,11 +39,9 @@ public class ServerThread extends Thread {
         try {
             allThread.broadCast(Nome + " ha abbandonato il gruppo" + '\n', "G");
             remove = allThread.threadList.remove(this);
-            String listaUtenti ="";
-            for(int i =0; i<allThread.threadList.size(); i++){
-                listaUtenti = (listaUtenti+allThread.threadList.get(i).Nome+", ");
+            if(amministratore){
+                allThread.newAdministrator();
             }
-            System.out.println(listaUtenti+remove);
             outVersoClient.writeBytes("close");// invia segnale al client di chiudersi
             outVersoClient.close();
             inDalClient.close();

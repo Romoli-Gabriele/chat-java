@@ -69,5 +69,9 @@ public class MultiSrv {
             }
         }
     }
+    public void newAdministrator() throws IOException{
+        threadList.get(0).amministratore = true;
+        threadList.get(0).scrivi("Ora sei amministratore", "G", false);
+    }
 
 }

@@ -8,7 +8,7 @@ import javax.swing.*;
 public class gui extends JFrame implements ActionListener{
     //chat 
     public Container c=new Container();
-    public static final String titolo="Chat";
+    public static final String titolo="Chat Java";
     public JPanel p=new JPanel();
     public final JTextField destinatario=new JTextField();
     public final JTextField messaggio=new JTextField();
