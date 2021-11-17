@@ -43,7 +43,6 @@ public class ServerThread extends Thread {
             outVersoClient.close();
             inDalClient.close();
             client.close();
-            this.stop();
         } catch (IOException e) {
             System.out.println("Errore di chiusura");
         }
@@ -55,10 +54,12 @@ public class ServerThread extends Thread {
         for (;;) {
             destinatario = inDalClient.readLine();// Lettura destinatario o tipo messaggio
             if (destinatario.equals("fine")) { // chiusura thread
+                this.close();
                 if(amministratore){
+                    System.out.println("cerco un nuovo amministratore");
                     allThread.newAdministrator();
                 }
-                this.close();
+                this.stop();
                 break;
             }else if (destinatario.equals("stop") && amministratore) {
                 allThread.close();
