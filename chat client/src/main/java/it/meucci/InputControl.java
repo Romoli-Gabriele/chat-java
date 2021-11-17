@@ -20,6 +20,7 @@ public class InputControl extends Thread {
                 reply = in.readLine();// Lettura e controllo se bisogna chiudere il client
                 if (reply.equals("close")) {
                     Grafica.TextArea.append("Abbandono il gruppo..\n");
+                    Grafica.destinatario.removeItem(this);
                     System.exit(1);
                 }else {
                     Grafica.TextArea.append(reply + '\n');

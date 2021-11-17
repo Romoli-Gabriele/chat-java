@@ -10,7 +10,7 @@ public class gui extends JFrame implements ActionListener{
     public Container c=new Container();
     public static final String titolo="Chat Java";
     public JPanel p=new JPanel();
-    public final JTextField destinatario=new JTextField();
+    public final JComboBox<String> destinatario=new JComboBox<String>();
     public final JTextField messaggio=new JTextField();
     public final int larghezza=800;
     public final int altezza=600;
@@ -21,7 +21,6 @@ public class gui extends JFrame implements ActionListener{
     public final JButton chiudiChat=new JButton("Chiudi Chat");
     public final JLabel Destinatario=new JLabel("Destinatario:");
     public final JLabel Messaggio=new JLabel("Messaggio:");
-    public String nome="";
     public client CLI;
 
     public gui(client CLI){
@@ -67,8 +66,9 @@ public class gui extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent arg0) {
 
         if(arg0.getSource().equals(invio)){
-            CLI.destinatario=this.destinatario.getText();
-            destinatario.setText("");
+ /*           CLI.destinatario=this.destinatario.getText();
+            destinatario.setText("");*/
+            CLI.destinatario=this.destinatario.getSelectedItem().toString();
             CLI.messaggio=this.messaggio.getText();
             messaggio.setText("");
             try {
