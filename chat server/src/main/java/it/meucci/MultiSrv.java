@@ -51,11 +51,12 @@ public class MultiSrv {
             System.exit(1);
         }
     }
-    public void close(){
+    public void close() throws IOException{
         int l = threadList.size();
         System.out.println("numero tread"+l);
         for(int i = 0;i < l; i++){
-        
+            System.out.println(i);
+            threadList.get(i).outVersoClient.writeBytes("close\n");
         }
         System.out.println("chiudo tutto");
         System.exit(1);
