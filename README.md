@@ -9,11 +9,13 @@ per abbandonare la chat si clicca l’apposito bottone che invierà nel campo de
 se il messaggio è per tutti si scrive come destinatario G
 per chiudere tutta la chat si utilizza l’apposito bottone che invierà nel campo destinatario “stop” (solamente il primo entrato nella chat può se gli altri lo fanno riceve un output di mancanza di permessi)
 quando un client si unisce riceve una Stringa con tutti gli utenti
+Un combo box permette di selezionare il destinatario
 per scrivere il messaggio bisogna andare nel campo di testo apposito per inviarlo cliccare il messaggio invio
-i campi di testo sono 2 uno per il destinatario e uno per il messaggio 
 quando premo invio prima viene inviato il destinatario e poi il messaggio
-sopra i campi di testo c’è uno screen panel che salva tutti i messaggi
-
+sopra i campi di testo c’è una area di testo che salva:
+   tutti i messaggi con i relativi destinatari 
+   se sono stati inviati a tutti o in privato
+   l'entrata e l'uscita degli utenti
 SERVER
 il server chiede il nome al client 
 Controlla se il nome è valido

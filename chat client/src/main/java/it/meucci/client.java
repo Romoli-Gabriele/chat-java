@@ -46,7 +46,7 @@ public class client {
                     lUser.add(nU[i]);
                 }
             }
-            
+            lUser.remove(Nome);
         } catch (Exception e) {
             System.err.println("Errore creazione Socket o Buffer");
             System.exit(1);

@@ -21,13 +21,14 @@ public class gui extends JFrame implements ActionListener{
     public final JLabel Destinatario=new JLabel("Destinatario:");
     public final JLabel Messaggio=new JLabel("Messaggio:");
     public client CLI;
-    public final JComboBox<String> destinatario=new JComboBox<String>(CLI.lUser);
+    public final JComboBox<String> destinatario;
 
     public gui(client CLI){
         super(titolo);
         this.CLI = CLI;
         c=this.getContentPane();
         p.setLayout(null);
+        destinatario=new JComboBox<String>(CLI.lUser);
 
         p.add(scrollpane);
             scrollpane.setBounds(70,10,540,400);
