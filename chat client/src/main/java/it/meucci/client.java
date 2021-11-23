@@ -38,6 +38,12 @@ public class client {
             if (change.equals("Utenti collegati: Sei il primo utente ad accedere, sei amministratore del gruppo")) {
                 lUser.add(Nome);
                 amministratore = true;
+            }else{
+                String[] nU = change.split("Utenti collegati: ");
+                nU = nU[1].split(", ");
+                for(int i =0; i < nU.length;i++ ){
+                    lUser.add(nU[i]);
+                }
             }
             
         } catch (Exception e) {
