@@ -21,7 +21,7 @@ public class gui extends JFrame implements ActionListener{
     public final JLabel Destinatario=new JLabel("Destinatario:");
     public final JLabel Messaggio=new JLabel("Messaggio:");
     public client CLI;
-    public final JComboBox<String> destinatario=new JComboBox<String>(/*CLI*/);
+    public final JComboBox<String> destinatario=new JComboBox<String>(CLI.lUser);
 
     public gui(client CLI){
         super(titolo);

@@ -6,6 +6,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 public class client {
+    Vector<String> lUser = new Vector<String>();
     String nomeServer = "localhost";
     int portaServer = 6789;
     Socket socket;
@@ -20,11 +21,11 @@ public class client {
     InputControl controllo;
     boolean amministratore = false;
     String change;
-    Vector<String> lUser = new Vector<String>();
 
 
     protected Socket connetti() {
         try {
+            lUser.add("G");
             change = "nome già utilizzato";
             tastiera = new BufferedReader(new InputStreamReader(System.in)); // creazione Buffer
             socket = new Socket(nomeServer, portaServer); // creazione nuovo Socket
